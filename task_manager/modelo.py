@@ -6,7 +6,15 @@ class Tarefa:
         self.descricao = descricao
         self.concluida = concluida
         self.data_criacao = Tarefa.data_atual()
-        
+    
+    @property
+    def titulo(self):
+        return self.titulo
+    
+    @property
+    def descricao(self):
+        return self.descricao
+    
     @staticmethod
     def data_atual():
         agora = datetime.now()
@@ -18,7 +26,7 @@ class Tarefa:
     def reabrir(self):
         self.concluida = False
     
-    def exibir_tarefa(self):
+    def __str__(self):
         estado = "[X]" if self.concluida else "[ ]"
         return f"{estado} {self.titulo} - {self.descricao} (criado em {self.data_criacao})"
     
@@ -33,10 +41,9 @@ class ListaTarefas:
     def __iter__(self):
         return iter(self.tarefas)
     
-    def remover_tarefa(self, titulo:str):
-        for index, i in enumerate(self.tarefas): 
-            tarefa_atual = i
-            if titulo == tarefa_atual.titulo:
+    def remover_tarefa(self, titulo:str):  # sourcery skip: use-next
+        for index, tarefa in enumerate(self.tarefas): 
+            if titulo == tarefa.titulo:
                 return self.tarefas.pop(index)
         return None
     
@@ -44,21 +51,16 @@ class ListaTarefas:
         return len(self.tarefas)
         
     def listar_todas(self):
-        listagem = []
-        for tarefa in self.tarefas:
-            listagem.append(tarefa.exibir_tarefa())
-        return listagem
+        return [tarefa.str(tarefa) for tarefa in self.tarefas]
             
-    def buscar(self, titulo): #base
+    def buscar(self, titulo): #base  # sourcery skip: use-next
         for tarefa in self.tarefas:
-            tarefa_atual = tarefa
-            if titulo in tarefa_atual.titulo:
-                return tarefa_atual.exibir_tarefa()
+            if titulo in tarefa.titulo:
+                return tarefa.str(tarefa)
         return None
     
-    def marcar_concluida(self, titulo):
+    def marcar_concluida(self, titulo):  # sourcery skip: use-next
         for tarefa in self.tarefas:
-            tarefa_atual = tarefa
-            if titulo in tarefa_atual.titulo:
-                return tarefa_atual.marcar_concluida()
+            if titulo in tarefa.titulo:
+                return tarefa.marcar_concluida()
         return None
