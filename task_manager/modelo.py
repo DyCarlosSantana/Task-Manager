@@ -2,18 +2,30 @@ from datetime import datetime
 
 class Tarefa:
     def __init__(self, titulo:str, descricao:str, concluida:bool=False):
-        self.titulo = titulo
-        self.descricao = descricao
+        self._titulo = titulo
+        self._descricao = descricao
         self.concluida = concluida
         self.data_criacao = Tarefa.data_atual()
     
     @property
     def titulo(self):
-        return self.titulo
+        return self._titulo
     
+    @titulo.setter
+    def titulo(self, novo_titulo):
+        if not novo_titulo.strip():
+            raise ValueError("Titulo não pode ser vazio!") # Pesquisar mais sobre raise
+        self._titulo = novo_titulo
+
     @property
     def descricao(self):
-        return self.descricao
+        return self._descricao
+    
+    @descricao.setter
+    def descricao(self, nova_descricao):
+        if not nova_descricao.strip():
+            raise ValueError("Adicione uma descrição a Tarefa!")
+        self._descricao = nova_descricao
     
     @staticmethod
     def data_atual():
@@ -30,7 +42,10 @@ class Tarefa:
         estado = "[X]" if self.concluida else "[ ]"
         return f"{estado} {self.titulo} - {self.descricao} (criado em {self.data_criacao})"
     
-
+    def __repr__(self):
+        return f"Tarefa(titulo={self.titulo}, descrição={self.descricao}, concluida={self.concluida})"
+    
+    
 class ListaTarefas:
     def __init__(self):
         self.tarefas = []
@@ -51,12 +66,12 @@ class ListaTarefas:
         return len(self.tarefas)
         
     def listar_todas(self):
-        return [tarefa.str(tarefa) for tarefa in self.tarefas]
+        return [str(tarefa) for tarefa in self.tarefas]
             
     def buscar(self, titulo): #base  # sourcery skip: use-next
         for tarefa in self.tarefas:
             if titulo in tarefa.titulo:
-                return tarefa.str(tarefa)
+                return str(tarefa)
         return None
     
     def marcar_concluida(self, titulo):  # sourcery skip: use-next
