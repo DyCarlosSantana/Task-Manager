@@ -1,15 +1,23 @@
 from datetime import datetime
 
 class Tarefa:
-    def __init__(self, titulo:str, descricao:str, concluida:bool=False):
+    def __init__(self, titulo:str, descricao:str, concluida:bool=False, data_criacao=None):
         self._titulo = titulo
         self._descricao = descricao
-        self.concluida = concluida
-        self.data_criacao = Tarefa.data_atual()
+        self._concluida = concluida
+        self.data_criacao = data_criacao or Tarefa.data_atual()
     
     @property
     def titulo(self):
         return self._titulo
+    
+    @property
+    def descricao(self):
+        return self._descricao
+    
+    @property
+    def concluida(self):
+        return self._concluida
     
     @titulo.setter
     def titulo(self, novo_titulo):
@@ -17,10 +25,6 @@ class Tarefa:
             raise ValueError("Titulo não pode ser vazio!") # Pesquisar mais sobre raise
         self._titulo = novo_titulo
 
-    @property
-    def descricao(self):
-        return self._descricao
-    
     @descricao.setter
     def descricao(self, nova_descricao):
         if not nova_descricao.strip():
@@ -33,18 +37,36 @@ class Tarefa:
         return agora.strftime("%d/%m/%Y às %H:%M")
     
     def marcar_concluida(self):
-        self.concluida = True
+        self._concluida = True
     
     def reabrir(self):
-        self.concluida = False
+        self._concluida = False
     
+    # -- Conversão --
+    def to_dict(self):
+        return {
+            "titulo": self.titulo,
+            "descricao": self.descricao,
+            "concluida": self.concluida,
+            "data_criacao": self.data_criacao
+        } # Atributo .__dict__ tbm pode ser usado para conversão
+    
+    @classmethod
+    def from_dict(cls, dados_obj): #converte dict para obj
+        return cls(
+            titulo=dados_obj.get("titulo"),
+            descricao=dados_obj.get("descricao"),
+            concluida=dados_obj.get("concluida"),
+            data_criacao=dados_obj.get("data_criacao")
+        )
+
+    # -- Métodos especiais (dunder methods)
     def __str__(self):
         estado = "[X]" if self.concluida else "[ ]"
         return f"{estado} {self.titulo} - {self.descricao} (criado em {self.data_criacao})"
     
     def __repr__(self):
-        return f"Tarefa(titulo={self.titulo}, descrição={self.descricao}, concluida={self.concluida})"
-    
+        return f"Tarefa(titulo='{self.titulo}', descrição='{self.descricao}', concluida='{self.concluida}')"
     
 class ListaTarefas:
     def __init__(self):
