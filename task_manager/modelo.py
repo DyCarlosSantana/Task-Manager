@@ -72,21 +72,29 @@ class ListaTarefas:
     def __init__(self):
         self.tarefas = []
         
-    def adicionar_tarefa(self, nova_tarefa):
-        self.tarefas.append(nova_tarefa)
-    
     def __iter__(self):
         return iter(self.tarefas)
     
+    def __len__(self):
+        return len(self.tarefas)
+    
+    def adicionar_tarefa(self, nova_tarefa):
+        self.tarefas.append(nova_tarefa)
+        
     def remover_tarefa(self, titulo:str):  # sourcery skip: use-next
         for index, tarefa in enumerate(self.tarefas): 
             if titulo == tarefa.titulo:
                 return self.tarefas.pop(index)
         return None
     
-    def __len__(self):
-        return len(self.tarefas)
-        
+    def salvar_em_arquivo(self, caminho):
+        from .persistencia import salvar_tarefas
+        salvar_tarefas(self.tarefas, caminho)
+    
+    def carregar_do_arquivo(self, caminho):
+        from .persistencia import carregar_tarefas
+        carregar_tarefas(caminho)
+    
     def listar_todas(self):
         return [str(tarefa) for tarefa in self.tarefas]
             

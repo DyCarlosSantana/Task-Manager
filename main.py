@@ -1,5 +1,12 @@
 from task_manager.modelo import Tarefa, ListaTarefas
+from pathlib import Path
 
+path = Path(__file__).parent / "dados/arquivo_tarefas.json"
+if not path.exists():
+    path.touch()
+else:
+    print("Arquivo encontrado!")
+    
 # Instanciando os objetos (tarefa) com Tarefa
 tarefa_01 = Tarefa("Resolver implementações", "Resolver implementações dos métodos de Tarefa e ListaTarefa", False)
 tarefa_02 = Tarefa("Incrição Concurso", "Me inscruver para concurso da Transpetro", False)
@@ -18,5 +25,5 @@ lista_de_tarefas.adicionar_tarefa(tarefa_04)
 lista_de_tarefas.adicionar_tarefa(tarefa_05)
 lista_de_tarefas.adicionar_tarefa(tarefa_extra)
 
-
-
+lista_de_tarefas.salvar_em_arquivo(path)
+print(lista_de_tarefas.carregar_do_arquivo(path))

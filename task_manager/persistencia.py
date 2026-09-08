@@ -1,12 +1,5 @@
 import json
-from pathlib import Path
 from .modelo import Tarefa
-
-path = Path(__file__).parent / "arquivo_tarefas.json"
-if not path.exists():
-    path.touch()
-else:
-    print("Arquivo encontrado!")
     
 # Criação dos métodos e verificação
 def salvar_tarefas(lista_de_objetos, caminho_arquivo):
