@@ -66,7 +66,7 @@ class Tarefa:
         return f"{estado} {self.titulo} - {self.descricao} (criado em {self.data_criacao})"
     
     def __repr__(self):
-        return f"Tarefa(titulo='{self.titulo}', descrição='{self.descricao}', concluida='{self.concluida}')"
+        return f"Tarefa(titulo='{self.titulo}', descrição='{self.descricao}', concluida={self.concluida})"
     
 class ListaTarefas:
     def __init__(self):
@@ -93,7 +93,7 @@ class ListaTarefas:
     
     def carregar_do_arquivo(self, caminho):
         from .persistencia import carregar_tarefas
-        carregar_tarefas(caminho)
+        self.tarefas = carregar_tarefas(caminho)
     
     def listar_todas(self):
         return [str(tarefa) for tarefa in self.tarefas]
