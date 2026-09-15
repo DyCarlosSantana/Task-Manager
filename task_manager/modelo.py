@@ -88,11 +88,11 @@ class ListaTarefas:
         return None
     
     def salvar_em_arquivo(self, caminho):
-        from .persistencia import salvar_tarefas
+        from task_manager import salvar_tarefas
         salvar_tarefas(self.tarefas, caminho)
     
     def carregar_do_arquivo(self, caminho):
-        from .persistencia import carregar_tarefas
+        from task_manager import carregar_tarefas
         self.tarefas = carregar_tarefas(caminho)
     
     def listar_todas(self):

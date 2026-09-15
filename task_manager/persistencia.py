@@ -1,5 +1,5 @@
 import json
-from .modelo import Tarefa
+from task_manager import Tarefa
     
 # Criação dos métodos e verificação
 def salvar_tarefas(lista_de_objetos, caminho_arquivo):
