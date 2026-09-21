@@ -2,6 +2,8 @@ from datetime import datetime
 
 class Tarefa:
     def __init__(self, titulo:str, descricao:str, concluida:bool=False, data_criacao=None):
+        if not titulo:
+            raise ValueError("O titulo não pode ser vazio.")
         self._titulo = titulo
         self._descricao = descricao
         self._concluida = concluida
