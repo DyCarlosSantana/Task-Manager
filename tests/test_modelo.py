@@ -1,10 +1,10 @@
 import pytest
-from task_manager import Tarefa, ListaTarefas
+from task_manager import Tarefa
 
 # Teste para sem titulo
 def test_sem_titulo():
     with pytest.raises(ValueError):
-        tarefa_st = Tarefa("", "Descrição <sem titulo>")
+        Tarefa("", "Descrição <sem titulo>")
     
 
 # Teste para verificar se a função marca como concluido

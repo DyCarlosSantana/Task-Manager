@@ -8,3 +8,8 @@ def lista_tres_tarefas():
     lista.adicionar_tarefa(Tarefa("B", "Descrição B"))
     lista.adicionar_tarefa(Tarefa("C", "Descrição C"))
     return lista
+
+@pytest.fixture
+def lista():
+    lista = ListaTarefas()
+    return lista
