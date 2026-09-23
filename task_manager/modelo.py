@@ -68,7 +68,7 @@ class Tarefa:
         return f"{estado} {self.titulo} - {self.descricao} (criado em {self.data_criacao})"
     
     def __repr__(self):
-        return f"Tarefa(titulo='{self.titulo}', descrição='{self.descricao}', concluida={self.concluida})"
+        return f"Tarefa(titulo='{self.titulo}', descricao='{self.descricao}', concluida={self.concluida})"
     
 class ListaTarefas:
     def __init__(self):
