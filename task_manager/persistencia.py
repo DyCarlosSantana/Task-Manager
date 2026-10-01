@@ -9,8 +9,6 @@ def salvar_tarefas(lista_de_objetos, caminho_arquivo):
         
         with open(caminho_arquivo, "w", encoding="utf-8") as file:
             json.dump(lista_de_dicionarios, file)
-    except TypeError:
-        print("TypeError identificado")
     except FileNotFoundError:
             print("Diretorio não encontrado")
     

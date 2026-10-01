@@ -5,8 +5,31 @@ from task_manager import Tarefa
 def test_sem_titulo():
     with pytest.raises(ValueError):
         Tarefa("", "Descrição <sem titulo>")
-    
+        
+def test_setter_sem_titulo():
+    with pytest.raises(ValueError):
+        tarefa = Tarefa("", "Descrição <sem titulo>")
+        tarefa.titulo = ""
 
+# Testando __str__
+def test_str():
+    tarefa = Tarefa("Titulo", "Descrição")
+    resultado = str(tarefa)
+    assert "Titulo" in resultado
+    assert "Descrição" in resultado
+    
+def test_repr():
+    tarefa = Tarefa("Titulo", "Descrição")
+    resultado = repr(tarefa)
+    assert "Titulo" in resultado
+    assert "Descrição" in resultado
+    assert "False" in resultado
+
+def test_setter_sem_titulo():
+    with pytest.raises(ValueError):
+        tarefa = Tarefa("Titulo <sem descrição>", "")
+        tarefa.descricao = ""
+        
 # Teste para verificar se a função marca como concluido
 def test_marcar_concluida(lista_tres_tarefas):
     lista_tres_tarefas.marcar_concluida("A")
@@ -27,13 +50,6 @@ def test_verificacao_concluida():
     tarefa = Tarefa("Titulo", "Descrição", True)
     assert tarefa.concluida is True
 
-# Testando __str__
-def test_str():
-    tarefa = Tarefa("Titulo", "Descrição")
-    resultado = str(tarefa)
-    assert "Titulo" in resultado
-    assert "Descrição" in resultado
-    
 # Teste para alteração de titulo (setter)
 def test_setter_titulo():
     tarefa = Tarefa("Titulo", "Descrição")

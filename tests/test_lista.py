@@ -32,6 +32,13 @@ def test_remover_tarefa_inexistente(lista_tres_tarefas):
     removido = lista_tres_tarefas.remover_tarefa("D")
     assert removido is None
     
+def test_listar_todas(lista_tres_tarefas):
+    resultado = lista_tres_tarefas.listar_todas()
+    assert len(resultado) == 3
+    assert "A" in resultado[0]
+    assert "B" in resultado[1]
+    assert "C" in resultado[2]
+    
 def test_buscar(lista_tres_tarefas):
     resultado = lista_tres_tarefas.buscar("B")
     assert "B" in resultado
@@ -53,3 +60,11 @@ def test_marcar_concluida_inexistente(lista_tres_tarefas):
 def test_iteracao_preserva_ordem(lista_tres_tarefas):
     resultado = [t.titulo for t in lista_tres_tarefas]
     assert resultado == ["A", "B", "C"]
+    
+def test_salvar_e_carregar(tmp_path, lista_tres_tarefas):
+    caminho = tmp_path / "arquivo.json"
+    lista_tres_tarefas.salvar_em_arquivo(caminho)
+    lista_carregada = ListaTarefas()
+    lista_carregada.carregar_do_arquivo(caminho)
+    assert len(lista_carregada) == 3
+    
