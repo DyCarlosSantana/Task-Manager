@@ -8,6 +8,12 @@ def test_salvar_lista_vazia(tmp_path):
     salvar_tarefas([], caminho)
     resultado = carregar_tarefas(caminho)
     assert resultado == []
+
+# deve testar se o erro FileNotFoundError é detectado
+def test_salvar_tarefa_diretorio_inexistente(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        caminho_inexistente = tmp_path / "subpasta_que_nao_existe" / "arquivo.json"
+        salvar_tarefas([], caminho_inexistente)
     
 def test_round_trip_uma_tarefa(tmp_path):
     caminho = tmp_path / "tarefa.json"

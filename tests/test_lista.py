@@ -53,9 +53,24 @@ def test_marcar_concluida(lista):
     lista.marcar_concluida("Titulo")
     assert t.concluida is True
     
+# Teste para verificar se a função marca como concluido
+def test_marcar_concluida_em_lista(lista_tres_tarefas):
+    lista_tres_tarefas.marcar_concluida("A")
+    lista_tres_tarefas.marcar_concluida("B")
+    lista_tres_tarefas.marcar_concluida("C")
+    assert all(t.concluida is True for t in lista_tres_tarefas)
+    
 def test_marcar_concluida_inexistente(lista_tres_tarefas):
     lista_tres_tarefas.marcar_concluida("D")
     assert all(not t.concluida for t in lista_tres_tarefas)
+    
+# Teste para verificar se a função reabre as tarefas como NÂO concluidas
+def test_reabrir(lista_tres_tarefas):
+    for t in lista_tres_tarefas: # Conclui as tarefas para que recebam True
+        t.marcar_concluida()
+    for t in lista_tres_tarefas: # Reabre elas usando a função "reabrir" da Classe Tarefa
+        t.reabrir()
+    assert all( not t.concluida for t in lista_tres_tarefas)
     
 def test_iteracao_preserva_ordem(lista_tres_tarefas):
     resultado = [t.titulo for t in lista_tres_tarefas]

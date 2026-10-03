@@ -6,11 +6,16 @@ def test_sem_titulo():
     with pytest.raises(ValueError):
         Tarefa("", "Descrição <sem titulo>")
         
-def test_setter_sem_titulo():
+def test_setter_titulo_vazio():
     with pytest.raises(ValueError):
-        tarefa = Tarefa("", "Descrição <sem titulo>")
+        tarefa = Tarefa("Titulo Temporario", "Descrição <sem titulo>")
         tarefa.titulo = ""
 
+def test_setter_descricao_vazia():
+    with pytest.raises(ValueError):
+        tarefa = Tarefa("Titulo <sem descrição>", "")
+        tarefa.descricao = ""
+        
 # Testando __str__
 def test_str():
     tarefa = Tarefa("Titulo", "Descrição")
@@ -24,26 +29,6 @@ def test_repr():
     assert "Titulo" in resultado
     assert "Descrição" in resultado
     assert "False" in resultado
-
-def test_setter_sem_titulo():
-    with pytest.raises(ValueError):
-        tarefa = Tarefa("Titulo <sem descrição>", "")
-        tarefa.descricao = ""
-        
-# Teste para verificar se a função marca como concluido
-def test_marcar_concluida(lista_tres_tarefas):
-    lista_tres_tarefas.marcar_concluida("A")
-    lista_tres_tarefas.marcar_concluida("B")
-    lista_tres_tarefas.marcar_concluida("C")
-    assert all(t.concluida is True for t in lista_tres_tarefas)
-    
-# Teste para verificar se a função reabre as tarefas como NÂO concluidas
-def test_reabrir(lista_tres_tarefas):
-    for t in lista_tres_tarefas: # Conclui as tarefas para que recebam True
-        t.marcar_concluida()
-    for t in lista_tres_tarefas: # Reabre elas usando a função "reabrir" da Classe Tarefa
-        t.reabrir()
-    assert all( not t.concluida for t in lista_tres_tarefas)
 
 # Verificar Concluida recebendo True
 def test_verificacao_concluida():
