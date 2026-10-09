@@ -83,3 +83,14 @@ def test_salvar_e_carregar(tmp_path, lista_tres_tarefas):
     lista_carregada.carregar_do_arquivo(caminho)
     assert len(lista_carregada) == 3
     
+# Teste das novas funcionalidades
+def test_remover_por_indice(lista_tres_tarefas):
+    removida = lista_tres_tarefas.remover_por_indice(1)
+    assert removida.titulo == "A"
+    assert [t.titulo for t in lista_tres_tarefas] == ["B", "C"]
+
+def test_marcar_concluida_por_indice(lista_tres_tarefas):
+    lista_tres_tarefas.marcar_concluida_por_indice(1)
+    # Busca "A" referente a primeira tarefa da lista
+    resultado = lista_tres_tarefas.buscar()
+    assert "[X]" in resultado
