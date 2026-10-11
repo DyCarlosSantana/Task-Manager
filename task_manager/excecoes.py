@@ -11,5 +11,5 @@ class IndiceInvalido(Exception):
     pass
 
 class ArquivoInvalido(Exception):
-    """Levantanda quando o arquivo de destino (path) é invalido"""
+    """Levantada quando o arquivo de destino (path) é invalido"""
     pass

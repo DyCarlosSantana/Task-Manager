@@ -1,5 +1,5 @@
 from datetime import datetime
-from .excecoes import TarefaNaoEncontrada, IndiceInvalido, ArquivoInvalido
+from .excecoes import IndiceInvalido
 class Tarefa:
     def __init__(self, titulo:str, descricao:str, concluida:bool=False, data_criacao=None):
         if not titulo:
@@ -83,7 +83,7 @@ class ListaTarefas:
     def adicionar_tarefa(self, nova_tarefa):
         self.tarefas.append(nova_tarefa)
         
-    def remover_tarefa(self, titulo:str):  # Primeira forma de remoção criada # sourcery skip: use-next 
+    def remover_tarefa(self, titulo:str):  # Primeira forma de remoção criada
         for index, tarefa in enumerate(self.tarefas): 
             if titulo == tarefa.titulo:
                 return self.tarefas.pop(index)
@@ -100,30 +100,26 @@ class ListaTarefas:
     def listar_todas(self):
         return [str(tarefa) for tarefa in self.tarefas]
             
-    def buscar(self, titulo): #base  # sourcery skip: use-next
+    def buscar(self, titulo):
         for tarefa in self.tarefas:
             if titulo in tarefa.titulo:
                 return str(tarefa)
         return None
     
-    def marcar_concluida(self, titulo):  # sourcery skip: use-next
+    def marcar_concluida(self, titulo):
         for tarefa in self.tarefas:
             if titulo in tarefa.titulo:
                 return tarefa.marcar_concluida()
         return None
     
-    def remover_por_indice(self, indice:int):  # sourcery skip: use-next
+    def remover_por_indice(self, indice:int):
         if indice < 1 or indice > len(self.tarefas):
             raise IndiceInvalido("Indice Invalido")
-        for index, tarefa in enumerate(self.tarefas, start=1): 
-            if index == indice:
-                # list.pop(i) usa índice 0-based, então uso .pop(index -1) como forma de resolver o bug silencioso.
-                return self.tarefas.pop(index - 1) 
+        return self.tarefas.pop(indice -1)
             
-    def marcar_concluida_por_indice(self, indice):  # sourcery skip: use-next
+    def marcar_concluida_por_indice(self, indice:int):
         if indice < 1 or indice > len(self.tarefas):
             raise IndiceInvalido("Indice Invalido")
-        for index, tarefa in enumerate(self.tarefas, start=1):
-            if index == indice:
-                return self.tarefas.pop(index - 1)
-        return None
+        tarefa = self.tarefas[indice -1]
+        return tarefa.marcar_concluida()
+    
