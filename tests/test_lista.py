@@ -1,5 +1,6 @@
 import pytest
 from task_manager import ListaTarefas, Tarefa
+from task_manager.excecoes import IndiceInvalido
 
 def test_lista_vazia(lista):
     assert len(lista) == 0
@@ -83,3 +84,31 @@ def test_salvar_e_carregar(tmp_path, lista_tres_tarefas):
     lista_carregada.carregar_do_arquivo(caminho)
     assert len(lista_carregada) == 3
     
+# Teste das novas funcionalidades
+def test_remover_por_indice(lista_tres_tarefas):
+    removida = lista_tres_tarefas.remover_por_indice(1)
+    assert removida.titulo == "A"
+    assert [t.titulo for t in lista_tres_tarefas] == ["B", "C"]
+    
+def test_remover_por_indice_abaixo_do_minimo(lista_tres_tarefas):
+    with pytest.raises(IndiceInvalido):
+        lista_tres_tarefas.remover_por_indice(0)
+
+def test_remover_por_indice_acima_do_minimo(lista_tres_tarefas):
+    with pytest.raises(IndiceInvalido):
+        lista_tres_tarefas.remover_por_indice(99)
+
+def test_marcar_concluida_por_indice(lista_tres_tarefas):
+    lista_tres_tarefas.marcar_concluida_por_indice(1)
+    tarefas = list(lista_tres_tarefas)
+    assert tarefas[0].concluida is True
+    assert tarefas[1].concluida is False
+    assert tarefas[2].concluida is False
+    
+def test_marcar_concluida_por_indice_abaixo_do_minimo(lista_tres_tarefas): # Com indice menor que 1
+    with pytest.raises(IndiceInvalido):
+        lista_tres_tarefas.marcar_concluida_por_indice(0)
+        
+def test_marcar_concluida_por_indice_acima_do_minimo(lista_tres_tarefas): #Com indice maior que len(lista_tres_tarefas)
+    with pytest.raises(IndiceInvalido):
+        lista_tres_tarefas.marcar_concluida_por_indice(99)
